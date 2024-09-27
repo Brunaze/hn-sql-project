@@ -1,0 +1,3 @@
+SELECT wording, (coef / (SELECT SUM(coef) FROM Matter) * 100) as Pourcentage_coef FROM Matter;
+
+SELECT SUM(coef) AS Coef_total FROM Matter;

@@ -1,0 +1,47 @@
+SELECT COUNT(*) as Nb_of_tests FROM Test;
+
+SELECT n.score, s.name, s.firstname 
+FROM Notation n
+JOIN Student s ON n.numstud = s.numstud;
+
+SELECT n.score, s.name, s.firstname, m.wording
+FROM Notation n
+JOIN Student s ON n.numstud = s.numstud
+JOIN Test t on n.numtest = t.numtest
+join Matter m on t.codemat = m.codemat;
+
+SELECT score
+FROM Notation
+WHERE score >= 10;
+
+SELECT DISTINCT s.name, s.firstname
+FROM Student s
+join Notation n on n.numstud = s.numstud
+WHERE score = 20;
+
+SELECT * 
+FROM Test
+WHERE testdate BETWEEN '2014-01-01' AND '2014-06-30';
+
+SELECT t.numtest, t.testdate, t.place, m.wording
+FROM Test t
+JOIN Matter m ON m.codemat = t.codemat;
+
+SELECT s.name, s.firstname, AVG(n.score) as moyenne
+FROM Student s
+JOIN Notation n ON n.numstud = s.numstud
+GROUP BY s.name, s.firstname
+ORDER by moyenne DESC;
+
+SELECT m.wording, AVG(n.score) AS moyenne
+FROM Notation n
+JOIN Test t ON n.numtest = t.numtest
+JOIN Matter m ON t.codemat = m.codemat
+GROUP BY m.wording
+HAVING COUNT(DISTINCT t.numtest) > 1;
+
+SELECT t.numtest, AVG(n.score) AS moyenne
+FROM Notation n
+JOIN Test t ON n.numtest = t.numtest
+GROUP BY t.numtest
+HAVING COUNT(n.numstud) < 6;
